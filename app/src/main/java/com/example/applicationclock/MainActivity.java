@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private TextView textview;
-    private TextView textclockid;
+    private TextView textclock;
     private SimpleDateFormat timeFormat;
 
         @Override
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Get parameters from xml-file
         textview = findViewById(R.id.textview_second);
-        textclockid = findViewById(R.id.textclockid);
+        textclock = findViewById(R.id.textclock);
 
         timeFormat = new SimpleDateFormat("hh:mm:ss", Locale.getDefault());
 
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                         Date nT = getNetworkTime();
                         nT.setTime(nT.getTime());
                         String st = timeFormat.format(nT);
-                        textclockid.setText(st);
+                        textclock.setText(st);
                         textview.setText("NTP time:");
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -99,13 +99,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }).start();
         } else {
-            Date systemTime = Calendar.getInstance().getTime();
-            String system_time = timeFormat.format(systemTime);
-            textclockid.setText(system_time);
-            textview.setText("System time:");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Date systemTime = Calendar.getInstance().getTime();
+                    String system_time = timeFormat.format(systemTime);
+                    textclock.setText(system_time);
+                    textview.setText("System time:");
+                }
+            });
+
         }
     }
-
     //Method for getting the NTP time.
     private Date getNetworkTime() throws IOException {
         NTPUDPClient timeClient = new NTPUDPClient();

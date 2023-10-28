@@ -24,7 +24,7 @@
             android:textSize="50sp" />
 
         <TextClock
-            android:id="@+id/textclockid"
+            android:id="@+id/textclock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="System Time "
