@@ -89,25 +89,27 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     try {
                         Date nT = getNetworkTime();
-                        nT.setTime(nT.getTime());
-                        String st = timeFormat.format(nT);
-                        textclock.setText(st);
-                        textview.setText("NTP time:");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                nT.setTime(nT.getTime());
+                                String st = timeFormat.format(nT);
+                                textclock.setText(st);
+                                textview.setText("NTP time:");
+                            }
+                        });
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }).start();
         } else {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Date systemTime = Calendar.getInstance().getTime();
-                    String system_time = timeFormat.format(systemTime);
-                    textclock.setText(system_time);
-                    textview.setText("System time:");
-                }
-            });
+
+            Date systemTime = Calendar.getInstance().getTime();
+            String system_time = timeFormat.format(systemTime);
+            textclock.setText(system_time);
+            textview.setText("System time:");
 
         }
     }
