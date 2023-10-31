@@ -36,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         textclock = findViewById(R.id.textclock);
 
         timeFormat = new SimpleDateFormat("hh:mm:ss", Locale.getDefault());
+        timeFormat.setTimeZone(TimeZone.getTimeZone("Europe/Stockholm"));
 
         //Call function for getting time
         UpdateTime();
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         timeClient.setDefaultTimeout(2000);
         TimeInfo timeInfo;
 
-        InetAddress inetAddress = InetAddress.getByName("2.se.pool.ntp.org");
+        InetAddress inetAddress = InetAddress.getByName("1.se.pool.ntp.org");
         timeInfo = timeClient.getTime(inetAddress);
         long NTPTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();
         Date date = new Date(NTPTime);
