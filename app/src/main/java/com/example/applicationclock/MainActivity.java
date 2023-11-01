@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         textclock = findViewById(R.id.textclock);
 
         timeFormat = new SimpleDateFormat("hh:mm:ss", Locale.getDefault());
-        timeFormat.setTimeZone(TimeZone.getTimeZone("Europe/Stockholm"));
+
 
         //Call function for getting time
         UpdateTime();
@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         timeInfo = timeClient.getTime(inetAddress);
         long NTPTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();
         Date date = new Date(NTPTime);
+        timeFormat.setTimeZone(TimeZone.getTimeZone("Europe/Stockholm"));
         System.out.println("Returning NTPtime");
         return date;
 
